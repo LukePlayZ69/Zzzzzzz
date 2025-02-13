@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Valentine's Project</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #ffebee;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      /* Remove or comment out this line */
+      /* overflow: hidden; */
+    }
+    h1 {
+      color: #d32f2f;
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    p {
+      color: #c62828;
+      font-size: 1.5rem;
+      margin-bottom: 30px;
+    }
+    .slideshow {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      border: 5px solid #d32f2f;
+      margin: 20px auto;
+      overflow: hidden;
+      position: relative;
+    }
+    .slideshow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+    .slideshow img.active {
+      opacity: 1;
+    }
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #d32f2f;
+      color: white;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-radius: 50px;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #b71c1c;
+    }
+    .gif-container {
+      margin-top: 30px;
+    }
+    .gif-container img {
+      width: 200px;
+      height: auto;
+    }
+    footer {
+      margin-top: 50px;
+      color: #d32f2f;
+      font-size: 1rem;
+      padding-bottom: 20px; /* Add padding to ensure visibility */
+      position: relative; /* Ensure it stays above the confetti */
+      z-index: 1001; /* Higher than the confetti's z-index */
+    }
+    #confetti {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000; /* Lower than the footer's z-index */
+    }
+  </style>
+</head>
+<body>
+  <h1>Happy Valentine's Day, Thel Ly! 💖</h1>
+  <p>happy valentineပါ သဲလေး</p>
+  <p>များရီးချစ်တယ်နော်🙉❤️</p>
+
+  <div class="slideshow">
+    <img src="Test11.jpg" alt="Photo 1" class="active">
+    <img src="Test22.jpg" alt="Photo 2">
+    <img src="Test33.jpg" alt="Photo 3">
+  </div>
+
+  <a href="https://lukeplayz69.github.io/Valentine--test/" class="button" target="_blank">Click here for my love letter 💌</a>
+
+  
+
+  <footer>
+    Made with ❤️ by your lovely [Luke]
+  </footer>
+
+  <!-- Confetti Animation -->
+  <canvas id="confetti"></canvas>
+
+  <!-- Background Music -->
+  <audio id="background-music" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Slideshow Script
+    const slides = document.querySelectorAll('.slideshow img');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    setInterval(nextSlide, 3000); // Change slide every 3 seconds
+
+    // Confetti Animation Script
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiPieces = [];
+    const colors = ['#d32f2f', '#ffcccb', '#ffebee', '#c62828'];
+
+    class Confetti {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height - canvas.height;
+        this.diameter = Math.random() * 10 + 5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speed = Math.random() * 3 + 1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.diameter, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      update() {
+        this.y += this.speed;
+        if (this.y > canvas.height) {
+          this.y = 0;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 100; i++) {
+        confettiPieces.push(new Confetti());
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach(confetti => {
+        confetti.draw();
+        confetti.update();
+      });
+      requestAnimationFrame(animateConfetti);
+    }
+
+    createConfetti();
+    animateConfetti();
+
+    // Background Music Script
+    const music = document.getElementById('background-music');
+    music.volume = 0.5; // Set volume to 50%
+  </script>
+</body>
+</html>
